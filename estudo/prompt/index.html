@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>6 Prompts — Psicologia de Ads · H&W 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0a;
+  --card: #111214;
+  --border: #1e2028;
+  --gold: #C89B3C;
+  --gold-dim: rgba(200,155,60,.08);
+  --gold-border: rgba(200,155,60,.2);
+  --text: #E8E8E6;
+  --text-mid: #9CA3AF;
+  --text-dim: #5C6069;
+  --green: #34D399;
+  --green-dim: rgba(52,211,153,.1);
+  --blue: #60A5FA;
+  --red: #F87171;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+.page { max-width: 780px; margin: 0 auto; padding: 0 24px 80px; }
+
+/* COVER */
+.cover { padding: 80px 0 60px; border-bottom: 1px solid var(--border); margin-bottom: 48px; position: relative; }
+.cover-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 48px; }
+.cover-tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--text-dim); }
+.cover-author { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: .15em; text-transform: uppercase; color: var(--text-dim); text-align: right; }
+.cover h1 { font-family: 'DM Serif Display', Georgia, serif; font-size: 48px; color: white; line-height: 1.05; margin-bottom: 12px; letter-spacing: -.02em; }
+.cover h1 span { color: var(--gold); }
+.cover p { font-size: 16px; color: var(--text-mid); margin-bottom: 24px; }
+.cover .formula { display: inline-flex; align-items: center; gap: 14px; padding: 12px 24px; border: 1px solid var(--gold-border); border-radius: 6px; background: var(--gold-dim); }
+.cover .formula span { font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600; color: var(--gold); letter-spacing: .06em; }
+.cover .formula .sep { color: rgba(200,155,60,.3); }
+
+/* PROMPT CARD */
+.prompt-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 32px; overflow: hidden; position: relative; }
+.prompt-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--gold), rgba(200,155,60,.2)); }
+.prompt-header { padding: 20px 28px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.prompt-num { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); }
+.prompt-tool { font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; padding: 4px 10px; border-radius: 4px; }
+.tool-any { background: var(--green-dim); color: var(--green); }
+.tool-deep { background: rgba(96,165,250,.1); color: var(--blue); }
+.prompt-title { padding: 16px 28px 0; font-family: 'DM Serif Display', Georgia, serif; font-size: 20px; color: white; }
+.prompt-body { padding: 16px 28px 28px; font-family: 'JetBrains Mono', monospace; font-size: 12.5px; line-height: 1.85; color: var(--text-mid); white-space: pre-wrap; word-wrap: break-word; }
+.prompt-body strong, .prompt-body b { color: var(--text); }
+.copy-btn { position: absolute; bottom: 16px; right: 16px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); color: var(--text-mid); font-family: 'JetBrains Mono', monospace; font-size: 10px; padding: 6px 14px; border-radius: 6px; cursor: pointer; transition: all .2s; letter-spacing: .06em; text-transform: uppercase; z-index: 2; }
+.copy-btn:hover { background: var(--gold-dim); border-color: var(--gold-border); color: var(--gold); }
+.copy-btn.copied { background: var(--green-dim); border-color: rgba(52,211,153,.3); color: var(--green); }
+
+/* SECTION DIVIDER */
+.section-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--text-dim); margin: 48px 0 24px; display: flex; align-items: center; gap: 16px; }
+.section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+/* NOTES */
+.note { font-size: 13px; color: var(--text-dim); line-height: 1.7; margin-top: 12px; padding: 14px 20px; background: rgba(255,255,255,.02); border-radius: 8px; border: 1px solid var(--border); }
+.note strong { color: var(--text-mid); }
+
+/* FOOTER */
+.footer { text-align: center; padding: 48px 0; border-top: 1px solid var(--border); margin-top: 48px; }
+.footer p { font-size: 12px; color: var(--text-dim); line-height: 1.8; }
+
+@media (max-width: 640px) {
+  .cover h1 { font-size: 36px; }
+  .prompt-body { font-size: 11.5px; padding: 14px 20px 20px; }
+  .prompt-header { padding: 16px 20px 12px; }
+  .prompt-title { padding: 12px 20px 0; font-size: 18px; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="cover">
+  <div class="cover-top">
+    <div class="cover-tag">H&W · Masterclass · 2026</div>
+    <div class="cover-author">Guilherme Bifi<br>@gbifi</div>
+  </div>
+  <h1>6 Prompts<br><span>Ready-to-Paste</span></h1>
+  <p>O pipeline completo de Deep Research para extrair sub-personas, código emocional, trends e ângulos explosivos de qualquer nicho de saúde.</p>
+  <div class="formula">
+    <span>ELEMENTO X</span>
+    <span class="sep">›</span>
+    <span>FORMATO</span>
+    <span class="sep">›</span>
+    <span>COPY</span>
+  </div>
+</div>
+
+<div class="section-label">Profundidade — Quem é a audiência</div>
+
+<div class="prompt-card">
+  <button class="copy-btn" onclick="copyPrompt(this, 0)">Copiar</button>
+  <div class="prompt-header">
+    <span class="prompt-num">PROMPT 1 — RAPID MARKET SNAPSHOT</span>
+    <span class="prompt-tool tool-any">Qualquer AI</span>
+  </div>
+  <div class="prompt-title">RAPID MARKET SNAPSHOT</div>
+  <div class="note">Cria a fundação: quem é o avatar, qual o posicionamento, quais problemas resolve. Briefing estratégico que alimenta todo o resto.</div>
+  <div class="prompt-body" id="prompt-0">#Role
+You are a strategic marketing analyst trained in rapid onboarding and positioning discovery for direct response health offers in the American 50+ market.
+
+#Goal
+Generate a short, high-clarity writeup answering: Who are we targeting, what are we selling, and what problems are we solving?
+
+#Context
+My ideal customer persona is: [INSERIR AQUI]
+The product I want to sell is: [INSERIR AQUI]
+The problems my product is solving: [INSERIR AQUI]
+
+#Task
+Write a few short paragraphs that clearly answer the three context questions. Include:
+- A one-paragraph sketch of the customer persona (demographics, psychographics, motivations)
+- A 1–2 sentence description of the product and positioning
+- A short explanation of the core problems this product resolves
+Keep language simple, human, no marketing fluff.
+
+#Output
+Plain paragraphs, not lists. Write as if handing off to a creative strategist who needs to understand the market at a glance before diving into Deep Research.</div>
+</div>
+
+<div class="prompt-card">
+  <button class="copy-btn" onclick="copyPrompt(this, 1)">Copiar</button>
+  <div class="prompt-header">
+    <span class="prompt-num">PROMPT 2 — QUOTES REAIS DO REDDIT (DEEP RESEARCH)</span>
+    <span class="prompt-tool tool-deep">Deep Research / Perplexity Pro</span>
+  </div>
+  <div class="prompt-title">QUOTES REAIS DO REDDIT (DEEP RESEARCH)</div>
+  <div class="note">O coração do Elemento X. Joga a AI dentro do Reddit e extrai as palavras reais que a audiência usa pra descrever sua dor. Quotes verbatim, sem filtro.</div>
+  <div class="prompt-body" id="prompt-1">#Role
+You are a world-class market research analyst with 10+ years specializing in extracting exact customer language from Reddit for direct response health advertising.
+
+#Goal
+Gather 100 verbatim, word-for-word quotes from Reddit that my target customers use when discussing their fears, frustrations, wants, beliefs, and joys. Produce a detailed persona sketch informed by these authentic voices.
+
+#Context
+My ideal customer persona is: [INSERIR AQUI]
+The product I want to sell is: [INSERIR AQUI]
+The problems my product is solving: [INSERIR AQUI]
+I want to deeply understand the motivations, pain points, and aspirations that drive my ideal customer — using their own words and tone.
+
+#Task
+1. Identify and prioritize relevant subreddits.
+2. Search threads and comments from the past 6 months, ensuring current language and sentiment.
+3. Extract 20 raw, word-for-word quotes per category (total: 100), preserving slang, typos, and emotion:
+   - My prospect fears are…
+   - My prospect feels frustrated by…
+   - My prospect wants…
+   - My prospect believes…
+   - My prospect enjoys…
+4. Label each quote with the subreddit/thread source.
+5. Synthesize a 5–6 sentence persona sketch capturing the emotional landscape and driving motivations.
+
+#Output
+Clear, organized, numbered list by category. Each quote in quotation marks with subreddit label. Persona sketch at the end in plain language.</div>
+</div>
+
+<div class="prompt-card">
+  <button class="copy-btn" onclick="copyPrompt(this, 2)">Copiar</button>
+  <div class="prompt-header">
+    <span class="prompt-num">PROMPT 3 — PSYCHOGRAPHIC RESEARCH</span>
+    <span class="prompt-tool tool-any">Qualquer AI</span>
+  </div>
+  <div class="prompt-title">PSYCHOGRAPHIC RESEARCH</div>
+  <div class="note">Organiza as quotes em 4 buckets psicográficos (Identidade, Problemas, Desejos, Obstáculos). Os padrões que emergem revelam sub-personas.</div>
+  <div class="prompt-body" id="prompt-2">#Goal
+Produce an in-depth psychographic profile using Eugene Schwartz's research methods. Map Identity, Problems, Dreams/Desires, and Obstacles so our copy sounds like it was written from inside the community.
+
+#Context
+My ideal customer persona is: [INSERIR AQUI]
+The product I want to sell is: [INSERIR AQUI]
+The problems my product is solving: [INSERIR AQUI]
+
+#Task
+1. For each of the 4 categories below, gather at least 5 distinct themes. Under every theme, collect 2–4 word-for-word quotes (include slang, typos, emotion):
+   - Identity (who they believe they are)
+   - Problems (what keeps them up at night)
+   - Dreams / Desires (what they truly want)
+   - Obstacles (why they haven't solved it yet)
+2. Label every quote with the source subreddit/thread.
+3. Beneath each theme write a short Note that sums up the pattern.
+4. Synthesize a 5–6 sentence persona sketch.
+
+#Output
+Clean, ordered document by category → theme → quotes → pattern note. Persona sketch at the end.</div>
+</div>
+
+<div class="prompt-card">
+  <button class="copy-btn" onclick="copyPrompt(this, 3)">Copiar</button>
+  <div class="prompt-header">
+    <span class="prompt-num">PROMPT 4 — AWARENESS + WILL / WON'T / CAN'T TELL</span>
+    <span class="prompt-tool tool-any">Qualquer AI</span>
+  </div>
+  <div class="prompt-title">AWARENESS + WILL / WON'T / CAN'T TELL</div>
+  <div class="note">Expande cada desire com a escada "So I can..." e mapeia Will Tell / Won't Tell / Can't Tell. A camada emocional mais profunda.</div>
+  <div class="prompt-body" id="prompt-3">#Goal
+Surface the deepest market desires and awareness-level questions of our target audience using Eugene Schwartz's methodology.
+
+#Context
+My ideal customer persona is: [INSERIR AQUI]
+The product I want to sell is: [INSERIR AQUI]
+The problems my product is solving: [INSERIR AQUI]
+
+#Task
+1. Market Awareness Levels Table
+   Build a table with 5 columns: Most Aware, Product Aware, Solution Aware, Problem Aware, Unaware.
+   For each column list the key questions a prospect at that stage is likely asking.
+
+2. Market Desires Expansion
+   Identify 5–10 explicit desires. Create a "So I can…" ladder for each (3 levels deep).
+   Table: Desire | So I can… (L1) | So I can… (L2) | So I can… (L3)
+
+3. Will / Won't / Can't Tell Table
+   For every desire above:
+   - Will Tell — what they say openly
+   - Won't Tell — what feels too private or embarrassing
+   - Can't Tell — hidden or subconscious drivers
+   Table: Desire | Will Tell | Won't Tell | Can't Tell
+
+#Output
+3 tables in order, formatted cleanly for copy/paste.</div>
+</div>
+
+<div class="section-label">Timing — O que está acontecendo agora</div>
+
+<div class="prompt-card">
+  <button class="copy-btn" onclick="copyPrompt(this, 4)">Copiar</button>
+  <div class="prompt-header">
+    <span class="prompt-num">PROMPT 5 — TREND SCANNER (DEEP RESEARCH)</span>
+    <span class="prompt-tool tool-deep">Deep Research / Perplexity Pro</span>
+  </div>
+  <div class="prompt-title">TREND SCANNER (DEEP RESEARCH)</div>
+  <div class="note">Varre o que está acontecendo AGORA — esta semana, este mês. Conversas emergentes, ingredientes trending, medos novos, formatos virais, mudanças regulatórias.</div>
+  <div class="prompt-body" id="prompt-4">#Role
+You are a real-time market intelligence analyst specialized in identifying emerging trends, breaking conversations, and sentiment shifts in the health and wellness market. You monitor Reddit, TikTok, YouTube, Google Trends, PubMed, FDA announcements, and health news outlets.
+
+#Goal
+Produce a comprehensive trend report for the [NICHE] market, capturing what is happening RIGHT NOW — this week, this month — that creates new emotional triggers, new angles, new fears, or new opportunities that marketers can leverage immediately.
+
+#Context
+Niche: [INSERIR NICHO — ex: Erectile Dysfunction supplements for men 50+]
+Target audience: [INSERIR AUDIÊNCIA — ex: American men 50-70 with ED]
+Current product type: [INSERIR TIPO — ex: Natural supplement / Telehealth prescription / Compounded formula]
+
+#Task
+Search across Reddit, TikTok, YouTube, Google Trends, PubMed, FDA.gov, and major health news sites for the MOST RECENT developments (last 30 days, prioritize last 7 days). Organize findings into 5 categories:
+
+1. EMERGING CONVERSATIONS
+New discussion threads gaining traction on Reddit and social media. Topics that are being talked about NOW that weren't being talked about 60 days ago. Include exact quotes and thread links where possible.
+
+2. TRENDING INGREDIENTS / TREATMENTS
+New ingredients, compounds, formulations, or treatment approaches gaining attention — either positive or negative. Include source of attention (TikTok trend, new study, influencer mention, Reddit thread).
+
+3. NEW FEARS & CONCERNS
+Negative news, side effect reports, FDA warnings, lawsuits, or alarming studies that are creating NEW fear in the market right now. These are urgent emotional triggers that didn't exist recently.
+
+4. VIRAL CONTENT FORMATS
+What types of organic content about this niche are getting high engagement right now on TikTok, YouTube, and Reddit? Describe the format, tone, and why it's working. These represent the audience's current "native content consumption" pattern.
+
+5. REGULATORY & NEWS SHIFTS
+FDA announcements, legal changes, insurance coverage updates, pricing shifts, supply chain issues, or mainstream media coverage that is actively changing the market landscape.
+
+For each finding, include:
+- What it is (specific, not vague)
+- Where it's happening (platform, subreddit, source)
+- When it emerged (date or timeframe)
+- Why it matters for advertising (emotional trigger, angle opportunity, or market gap)
+
+#Output
+Organized by the 5 categories above. Each finding as a short paragraph with source. Prioritize findings with the highest ADVERTISING POTENTIAL — meaning those that can be turned into ad angles, hooks, or VSL narratives immediately.</div>
+</div>
+
+<div class="prompt-card">
+  <button class="copy-btn" onclick="copyPrompt(this, 5)">Copiar</button>
+  <div class="prompt-header">
+    <span class="prompt-num">PROMPT 6 — CRUZAMENTO: PERSONA × TREND (GERADOR DE ÂNGULOS)</span>
+    <span class="prompt-tool tool-any">Qualquer AI</span>
+  </div>
+  <div class="prompt-title">CRUZAMENTO: PERSONA × TREND (GERADOR DE ÂNGULOS)</div>
+  <div class="note">Cruza sub-personas (Profundidade) × trends (Timing). Resultado: matriz de ângulos com zona de escala e janela de tempo. O gerador de Zona 4.</div>
+  <div class="prompt-body" id="prompt-5">#Role
+You are a creative strategist specialized in direct response advertising who identifies high-converting ad angles by systematically crossing audience psychology with real-time market trends.
+
+#Goal
+Generate a matrix of high-potential ad angles by crossing each persona discovered in the Deep Research (Phase 1) with each relevant trend from the Trend Scanner (Prompt 5). Each angle must be specific, actionable, and time-sensitive.
+
+#Context
+[PASTE THE OUTPUT OF YOUR PERSONA RESEARCH — Prompts 1-4 results, including personas, sub-personas, Ethos, Pathos levels, Will/Won't/Can't Tell]
+
+[PASTE THE OUTPUT OF PROMPT 5 — Trend Scanner results, all 5 categories]
+
+#Task
+For each persona and sub-persona identified:
+
+1. ETHOS × TREND MATCH
+Which current trends align with this persona's source of trust? For example: if the persona trusts pastors and a trending TikTok format features faith-based health testimonials, that's a match.
+
+2. PATHOS × TREND MATCH  
+Which current trends activate this persona's deepest emotional layer (Pathos Level 3-4 / Can't Tell)? For example: if the persona's Can't Tell is "maybe God is punishing me" and a new study links a biblical ingredient to health benefits, that trend activates the deepest emotional layer.
+
+3. FORMAT × TREND MATCH
+Which viral content formats from the trend scan match this persona's organic content consumption? This determines the ad container.
+
+4. ANGLE SYNTHESIS
+For each viable cross, generate a complete angle brief:
+- Persona (specific name from research)
+- Trend (specific finding from scan)
+- Hook (first line of the ad, in the persona's language)
+- Emotional mechanism (which Pathos level it hits)
+- Format recommendation (based on viral format match)
+- Time window estimate (24h / 7 days / 30 days before saturation)
+- Scale zone (Zone 1-4 from the Depth × Timing framework)
+
+5. PRIORITY RANKING
+Rank all angles by:
+- Zone 4 angles first (highest depth × timing)
+- Zone 3 next
+- Zone 2 as evergreen backlog
+
+#Output
+A numbered list of angle briefs, ranked by scale potential. Each brief should be complete enough for a copywriter to start writing immediately. Include at minimum 10 angles across the personas.</div>
+</div>
+
+
+<div class="footer">
+  <p>Psicologia de Ads · Deep Research · 6 Prompts<br>
+  H&W · Masterclass 2026 · Documento Confidencial<br>
+  Guilherme Bifi · @gbifi</p>
+</div>
+
+</div>
+
+<script>
+function copyPrompt(btn, idx) {
+  const body = document.getElementById('prompt-' + idx);
+  const text = body.innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = '✓ Copiado';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = 'Copiar';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+</script>
+
+</body>
+</html>
