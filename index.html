@@ -5,18 +5,385 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cycle — Performance Marketing Infrastructure</title>
 <meta name="description" content="Cycle is a performance marketing operation built on direct response. Nutraceutical affiliation at scale, systematic creative testing, and account infrastructure engineered for continuity.">
-<link rel="icon" type="image/png" href="assets/logo.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='11' stroke='%23D9A441' stroke-width='3' fill='none' stroke-dasharray='52 17'/%3E%3Ccircle cx='16' cy='16' r='4' fill='%23D9A441'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
+<style>
+/* ════════════════════════════════════════════
+   CYCLE — instrumentation, not decoration
+   ════════════════════════════════════════════ */
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  /* cold, restrained, instrument-panel */
+  --ink:#0B0D10;          /* near-black, blue-cast */
+  --ink-2:#12151A;        /* raised surface */
+  --ink-3:#1A1F26;        /* card */
+  --line:#242A33;         /* hairline */
+  --line-2:#333B45;
+  --paper:#E8EAED;        /* primary text */
+  --paper-2:#8D949E;      /* secondary text */
+  --paper-3:#5B626C;      /* tertiary / captions */
+  --signal:#D9A441;       /* amber — the single accent */
+  --signal-dim:rgba(217,164,65,.14);
+
+  --wrap:1180px;
+  --nav-h:72px;
+
+  --display:'Archivo',system-ui,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+}
+
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h) + 24px)}
+
+body{
+  font-family:var(--display);
+  background:var(--ink);
+  color:var(--paper);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+a{color:inherit;text-decoration:none}
+img{max-width:100%;height:auto;display:block}
+ul{list-style:none}
+
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 28px}
+
+/* ── type utilities ─────────────────────── */
+.eyebrow{
+  font-family:var(--mono);
+  font-size:.7rem;
+  font-weight:500;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--signal);
+  margin-bottom:18px;
+}
+
+h1,h2,h3,h4{letter-spacing:-.025em;line-height:1.08;font-weight:700}
+
+/* ── buttons ────────────────────────────── */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  font-family:var(--mono);
+  font-size:.78rem;font-weight:500;
+  letter-spacing:.06em;text-transform:uppercase;
+  padding:14px 24px;
+  border:1px solid transparent;
+  cursor:pointer;
+  transition:background .18s ease,border-color .18s ease,color .18s ease;
+}
+.btn-solid{background:var(--signal);color:var(--ink);border-color:var(--signal)}
+.btn-solid:hover{background:#E8B858;border-color:#E8B858}
+.btn-ghost{background:transparent;color:var(--paper);border-color:var(--line-2)}
+.btn-ghost:hover{border-color:var(--signal);color:var(--signal)}
+.btn-block{width:100%}
+
+/* ── nav ────────────────────────────────── */
+.nav{
+  position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:900;
+  background:rgba(11,13,16,.82);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid transparent;
+  transition:border-color .3s ease,background .3s ease;
+}
+.nav.stuck{border-bottom-color:var(--line);background:rgba(11,13,16,.95)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:100%}
+.nav-logo{display:flex;align-items:center}
+.logo-mark{height:30px;width:auto;display:block}
+.nav-links{display:flex;gap:30px}
+.nav-links a{
+  font-family:var(--mono);font-size:.75rem;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--paper-2);
+  padding:6px 0;position:relative;transition:color .2s ease;
+}
+.nav-links a::after{
+  content:'';position:absolute;left:0;bottom:0;height:1px;width:0;
+  background:var(--signal);transition:width .25s ease;
+}
+.nav-links a:hover{color:var(--paper)}
+.nav-links a:hover::after{width:100%}
+.nav-cta{padding:10px 18px;font-size:.72rem}
+.burger{display:none;flex-direction:column;gap:6px;background:none;border:0;cursor:pointer;padding:8px}
+.burger span{display:block;width:22px;height:1.5px;background:var(--paper);transition:.25s}
+.burger.open span:nth-child(1){transform:translateY(3.75px) rotate(45deg)}
+.burger.open span:nth-child(2){transform:translateY(-3.75px) rotate(-45deg)}
+
+/* ── hero ───────────────────────────────── */
+.hero{
+  padding:calc(var(--nav-h) + 110px) 0 0;
+  position:relative;
+  border-bottom:1px solid var(--line);
+}
+.hero::before{
+  /* faint grid — instrument panel texture */
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background-image:
+    linear-gradient(var(--line) 1px,transparent 1px),
+    linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:88px 88px;
+  opacity:.32;
+  mask-image:radial-gradient(ellipse 90% 60% at 50% 0%,#000 20%,transparent 78%);
+  -webkit-mask-image:radial-gradient(ellipse 90% 60% at 50% 0%,#000 20%,transparent 78%);
+}
+.hero .wrap{position:relative;z-index:2;padding-bottom:96px}
+
+.hero-h1{
+  font-size:clamp(2.4rem,6.2vw,4.6rem);
+  font-weight:800;
+  margin-bottom:28px;
+  max-width:16ch;
+}
+.hero-h1 em{font-style:normal;color:var(--signal)}
+
+.hero-lede{
+  font-size:1.05rem;color:var(--paper-2);
+  max-width:60ch;line-height:1.75;margin-bottom:38px;
+}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap}
+
+/* signature: feed strip */
+.feed{
+  border-top:1px solid var(--line);
+  background:var(--ink-2);
+  overflow:hidden;
+  padding:0;
+}
+.feed-track{
+  display:flex;width:max-content;
+  animation:scroll 46s linear infinite;
+}
+.fd{
+  display:flex;align-items:center;gap:12px;
+  font-family:var(--mono);font-size:.74rem;
+  color:var(--paper-2);white-space:nowrap;
+  padding:16px 30px;
+  border-right:1px solid var(--line);
+}
+.fd i{
+  font-style:normal;font-size:.62rem;letter-spacing:.16em;
+  color:var(--signal);
+}
+@keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ── sections ───────────────────────────── */
+.section{padding:112px 0;border-bottom:1px solid var(--line)}
+.section-alt{background:var(--ink-2)}
+
+.sec-head{max-width:64ch;margin-bottom:64px}
+.sec-head h2{font-size:clamp(1.7rem,3.6vw,2.7rem);margin-bottom:20px}
+.sec-lede{color:var(--paper-2);font-size:1rem;line-height:1.75;max-width:58ch}
+
+/* ── metrics ────────────────────────────── */
+.metrics{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  border-top:1px solid var(--line);
+}
+.metric{
+  padding:32px 26px 30px 0;
+  border-right:1px solid var(--line);
+}
+.metric:last-child{border-right:0;padding-right:0}
+.m-val{
+  display:block;font-family:var(--mono);
+  font-size:clamp(1.9rem,3.4vw,2.7rem);font-weight:600;
+  color:var(--paper);letter-spacing:-.03em;line-height:1;margin-bottom:14px;
+}
+.m-val sup{font-size:.44em;color:var(--signal);top:-.7em}
+.m-key{
+  display:block;font-size:.9rem;font-weight:600;
+  color:var(--paper);margin-bottom:8px;
+}
+.m-note{display:block;font-size:.82rem;color:var(--paper-3);line-height:1.6}
+
+.stance{
+  margin-top:56px;padding:30px 34px;
+  border-left:2px solid var(--signal);
+  background:var(--ink-2);
+}
+.stance p{color:var(--paper-2);font-size:1rem;line-height:1.8;max-width:78ch}
+
+/* ── layers (signature section) ─────────── */
+.layers{
+  display:grid;grid-template-columns:repeat(2,1fr);
+  gap:1px;background:var(--line);
+  border:1px solid var(--line);
+}
+.layer{
+  background:var(--ink);
+  padding:34px 32px 32px;
+  transition:background .25s ease;
+}
+.layer:hover{background:var(--ink-3)}
+.layer-top{display:flex;align-items:baseline;gap:14px;margin-bottom:18px}
+.layer-id{
+  font-family:var(--mono);font-size:.72rem;font-weight:600;
+  letter-spacing:.1em;color:var(--signal);
+  border:1px solid var(--signal-dim);padding:3px 8px;
+}
+.layer-top h3{font-size:1.3rem}
+.layer-body{color:var(--paper-2);font-size:.95rem;line-height:1.75;margin-bottom:22px}
+.layer-facts li{
+  font-family:var(--mono);font-size:.78rem;color:var(--paper-3);
+  padding:9px 0;border-top:1px solid var(--line);line-height:1.5;
+}
+.layer-facts li b{color:var(--paper);font-weight:600}
+
+.loop-note{
+  display:flex;gap:20px;align-items:flex-start;
+  margin-top:52px;padding:28px 30px;
+  border:1px dashed var(--line-2);
+}
+.loop-mark{font-size:1.6rem;color:var(--signal);line-height:1}
+.loop-note p{color:var(--paper-2);font-size:.97rem;line-height:1.75;max-width:72ch}
+
+/* ── verticals ──────────────────────────── */
+.verts{border-top:1px solid var(--line)}
+.verts li{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:20px 4px;border-bottom:1px solid var(--line);
+  transition:padding-left .22s ease,color .22s ease;
+}
+.verts li:hover{padding-left:14px}
+.verts li span{font-size:1.08rem;font-weight:500}
+.verts li i{
+  font-style:normal;font-family:var(--mono);
+  font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--paper-3);
+}
+.verts li:first-child i{color:var(--signal)}
+
+.channels{margin-top:44px;display:flex;gap:20px;align-items:baseline;flex-wrap:wrap}
+.channels-label{
+  font-family:var(--mono);font-size:.68rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--paper-3);
+}
+.channels-list{font-family:var(--mono);font-size:.86rem;color:var(--paper-2)}
+
+/* ── partners ───────────────────────────── */
+.partners-grid{display:grid;grid-template-columns:1fr 1.15fr;gap:72px;align-items:start}
+.partners-h2{font-size:clamp(1.7rem,3.4vw,2.5rem);margin-bottom:20px}
+.partners-lede{color:var(--paper-2);line-height:1.78;margin-bottom:32px}
+.promises{border-top:1px solid var(--line)}
+.promises li{padding:26px 0;border-bottom:1px solid var(--line)}
+.promises h4{font-size:1.02rem;margin-bottom:9px}
+.promises p{color:var(--paper-2);font-size:.93rem;line-height:1.7}
+
+/* ── contact ────────────────────────────── */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start}
+.contact-h2{font-size:clamp(1.9rem,4vw,3rem);margin-bottom:20px}
+.contact-lede{color:var(--paper-2);line-height:1.78;margin-bottom:28px;max-width:46ch}
+.mail{
+  display:inline-block;font-family:var(--mono);font-size:1rem;
+  color:var(--signal);border-bottom:1px solid var(--signal-dim);
+  padding-bottom:3px;transition:border-color .2s ease;
+}
+.mail:hover{border-bottom-color:var(--signal)}
+.contact-fine{margin-top:16px;font-size:.84rem;color:var(--paper-3)}
+
+.form{display:flex;flex-direction:column;gap:16px}
+.field{display:flex;flex-direction:column;gap:7px}
+.field span{
+  font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--paper-3);
+}
+.field input,.field select,.field textarea{
+  width:100%;padding:13px 15px;
+  background:var(--ink);
+  border:1px solid var(--line);
+  color:var(--paper);
+  font-family:var(--display);font-size:.94rem;
+  outline:none;transition:border-color .2s ease;
+}
+.section-alt .field input,.section-alt .field select,.section-alt .field textarea{background:var(--ink-2)}
+.field input::placeholder,.field textarea::placeholder{color:var(--paper-3)}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--signal)}
+.field select{appearance:none;-webkit-appearance:none;cursor:pointer;
+  background-image:url("data:image/svg+xml,%3Csvg width='11' height='7' viewBox='0 0 11 7' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%235B626C' stroke-width='1.3'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 15px center;
+}
+.field select option{background:var(--ink-2);color:var(--paper)}
+.field textarea{resize:vertical;min-height:104px}
+.form-status{font-family:var(--mono);font-size:.78rem;color:var(--signal);min-height:1.2em}
+
+/* ── footer ─────────────────────────────── */
+.foot{padding:60px 0 40px;background:var(--ink-2)}
+.foot-inner{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:44px;align-items:start}
+.logo-foot{height:34px;margin-bottom:16px;opacity:.8}
+.foot-brand p{font-size:.86rem;color:var(--paper-3);line-height:1.7}
+.foot-nav{display:flex;flex-direction:column;gap:11px}
+.foot-nav a{font-family:var(--mono);font-size:.76rem;color:var(--paper-2);transition:color .2s}
+.foot-nav a:hover{color:var(--signal)}
+.foot-meta{display:flex;flex-direction:column;gap:11px;align-items:flex-start}
+.foot-meta a{font-family:var(--mono);font-size:.76rem;color:var(--paper-2)}
+.foot-meta a:hover{color:var(--signal)}
+.foot-meta span{font-family:var(--mono);font-size:.7rem;color:var(--paper-3)}
+
+/* ── reveal ─────────────────────────────── */
+.rv{opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .55s ease}
+.rv.in{opacity:1;transform:none}
+
+@media (prefers-reduced-motion:reduce){
+  .rv{opacity:1;transform:none;transition:none}
+  .feed-track{animation:none}
+  html{scroll-behavior:auto}
+}
+
+/* ── responsive ─────────────────────────── */
+@media (max-width:940px){
+  .nav-links{
+    display:none;position:fixed;top:var(--nav-h);left:0;right:0;
+    flex-direction:column;gap:0;
+    background:var(--ink-2);border-bottom:1px solid var(--line);
+    padding:8px 28px 20px;
+  }
+  .nav-links.open{display:flex}
+  .nav-links a{padding:14px 0;border-bottom:1px solid var(--line)}
+  .nav-cta{display:none}
+  .burger{display:flex}
+
+  .metrics{grid-template-columns:repeat(2,1fr)}
+  .metric{border-bottom:1px solid var(--line);padding-right:22px}
+  .metric:nth-child(2n){border-right:0;padding-right:0}
+  .layers{grid-template-columns:1fr}
+  .partners-grid,.contact-grid{grid-template-columns:1fr;gap:48px}
+  .foot-inner{grid-template-columns:1fr;gap:32px}
+}
+
+@media (max-width:560px){
+  .wrap{padding:0 20px}
+  .section{padding:76px 0}
+  .hero{padding-top:calc(var(--nav-h) + 68px)}
+  .hero .wrap{padding-bottom:64px}
+  .metrics{grid-template-columns:1fr}
+  .metric{border-right:0;padding-right:0}
+  .stance{padding:24px 22px}
+  .layer{padding:26px 22px}
+  .loop-note{flex-direction:column;gap:12px;padding:22px}
+}
+
+/* focus visibility */
+a:focus-visible,button:focus-visible,input:focus-visible,
+select:focus-visible,textarea:focus-visible{
+  outline:2px solid var(--signal);outline-offset:2px;
+}
+
+</style>
 </head>
 <body>
 
 <!-- ══ NAV ══ -->
 <nav class="nav" id="nav">
   <div class="wrap nav-inner">
-    <a href="#top" class="nav-logo"><img src="assets/logo.png" alt="Cycle"></a>
+    <a href="#top" class="nav-logo"><svg class="logo-mark" viewBox="0 0 132 32" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cycle">
+  <circle cx="16" cy="16" r="11" stroke="#D9A441" stroke-width="2.2" stroke-dasharray="52 17" stroke-linecap="round"/>
+  <circle cx="16" cy="16" r="3.4" fill="#D9A441"/>
+  <text x="40" y="22" font-family="Archivo, sans-serif" font-size="18" font-weight="800" letter-spacing="2.2" fill="#E8EAED">CYCLE</text>
+</svg></a>
     <div class="nav-links" id="navLinks">
       <a href="#operation">Operation</a>
       <a href="#system">System</a>
@@ -318,7 +685,11 @@
 <footer class="foot">
   <div class="wrap foot-inner">
     <div class="foot-brand">
-      <img src="assets/logo.png" alt="Cycle">
+      <svg class="logo-mark logo-foot" viewBox="0 0 132 32" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cycle">
+  <circle cx="16" cy="16" r="11" stroke="#D9A441" stroke-width="2.2" stroke-dasharray="52 17" stroke-linecap="round"/>
+  <circle cx="16" cy="16" r="3.4" fill="#D9A441"/>
+  <text x="40" y="22" font-family="Archivo, sans-serif" font-size="18" font-weight="800" letter-spacing="2.2" fill="#E8EAED">CYCLE</text>
+</svg>
       <p>Performance marketing operation.<br>Direct response, built as infrastructure.</p>
     </div>
     <nav class="foot-nav">
@@ -335,6 +706,93 @@
   </div>
 </footer>
 
-<script src="script.js"></script>
+<script>
+/* ── nav state on scroll ─────────────────── */
+const nav = document.getElementById('nav');
+const onScroll = () => nav.classList.toggle('stuck', window.scrollY > 20);
+onScroll();
+window.addEventListener('scroll', onScroll, { passive: true });
+
+/* ── mobile menu ─────────────────────────── */
+const burger = document.getElementById('burger');
+const navLinks = document.getElementById('navLinks');
+burger.addEventListener('click', () => {
+  burger.classList.toggle('open');
+  navLinks.classList.toggle('open');
+});
+navLinks.querySelectorAll('a').forEach(a =>
+  a.addEventListener('click', () => {
+    burger.classList.remove('open');
+    navLinks.classList.remove('open');
+  })
+);
+
+/* ── scroll reveal ───────────────────────── */
+const reveal = new IntersectionObserver(
+  entries => entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('in');
+      reveal.unobserve(e.target);
+    }
+  }),
+  { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+);
+
+document.querySelectorAll(
+  '.sec-head, .metric, .stance, .layer, .loop-note, .verts li, .channels, .promises li, .partners-grid > div, .contact-grid > *'
+).forEach((el, i) => {
+  el.classList.add('rv');
+  el.style.transitionDelay = `${Math.min(i % 6, 5) * 60}ms`;
+  reveal.observe(el);
+});
+
+/* ── contact form ─────────────────────────
+   Real submission via Formspree.
+   Replace REPLACE_ID in index.html with your form ID
+   (free at formspree.io). Until then it fails loudly
+   rather than pretending to send.
+   ──────────────────────────────────────── */
+const form = document.getElementById('form');
+const status = document.getElementById('formStatus');
+
+form.addEventListener('submit', async e => {
+  e.preventDefault();
+  const btn = form.querySelector('button[type="submit"]');
+  const original = btn.textContent;
+
+  if (form.action.includes('REPLACE_ID')) {
+    status.textContent = 'Form endpoint not configured yet.';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Sending…';
+  status.textContent = '';
+
+  try {
+    const res = await fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { Accept: 'application/json' }
+    });
+    if (res.ok) {
+      form.reset();
+      status.textContent = 'Message sent. We\'ll be in touch.';
+    } else {
+      status.textContent = 'Something went wrong. Email us directly instead.';
+    }
+  } catch {
+    status.textContent = 'Connection failed. Email us directly instead.';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = original;
+  }
+});
+
+/* ── year ─────────────────────────────────── */
+const y = document.getElementById('year');
+if (y) y.textContent = `© ${new Date().getFullYear()} Cycle. All rights reserved.`;
+
+</script>
 </body>
 </html>
